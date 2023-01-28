@@ -9,14 +9,34 @@ function Login() {
   const navigate = useNavigate();
   const handleLogin = (e) => {
     e.preventDefault();
+    if (isTesorera(username, password) || isTesorero(username, password)) {
+      navigate("/pasajeros", {
+        state: { autorizado: true, invitado: false, tesorera: true },
+      });
+    }
     if (isInvitado(username, password)) {
-      navigate("/pasajeros", { state: { autorizado: true, invitado: true } });
+      navigate("/pasajeros", {
+        state: { autorizado: true, invitado: true, tesorera: false },
+      });
     }
     if (isValidUserName(username) && isValidPassword(password)) {
-      navigate("/pasajeros", { state: { autorizado: true, invitado: false } });
+      navigate("/pasajeros", {
+        state: { autorizado: true, invitado: false, tesorera: false },
+      });
     }
   };
-
+  const isTesorera = (username, password) => {
+    if (username === "Lgonzalez" && password === "1140352040") {
+      return true;
+    }
+    return false;
+  };
+  const isTesorero = (username, password) => {
+    if (username === "Lbarbosa" && password === "1161336329") {
+      return true;
+    }
+    return false;
+  };
   const isInvitado = () => {
     if (username === "Invitado" && password === "Enlapera") {
       return true;
@@ -25,7 +45,7 @@ function Login() {
   };
 
   const isValidUserName = (username) => {
-    const validUsernames = ["Lbarbosa", "Lgonzalez", "Smartinez"];
+    const validUsernames = ["Lbarbosa", "Smartinez"];
     if (validUsernames.includes(username)) {
       setUserIndex(validUsernames.indexOf(username));
       return true;
@@ -33,7 +53,7 @@ function Login() {
     return false;
   };
   const isValidPassword = (password) => {
-    const validPassword = ["1161336329", "1140352040", "1153119077"];
+    const validPassword = ["1161336329", "1153119077"];
     return validPassword[userIndex] == password;
   };
 

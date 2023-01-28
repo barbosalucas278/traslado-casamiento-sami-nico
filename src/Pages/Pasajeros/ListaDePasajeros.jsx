@@ -3,6 +3,7 @@ import ItemPasajero from "../../Components/ItemPasajero/ItemPasajero";
 import {
   getAllPasajerosByParada,
   updateEstadoPasajeros,
+  updatePagoPasajeros,
 } from "../../Services/firestoreServicee";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import "./listaDePasajeros.css";
@@ -55,7 +56,20 @@ function ListaDePasajeros() {
           pasajero.nombreCompleto,
           !pasajero.asistencia
         );
-        console.log(pasajero);
+        setActualizarLista(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleUpdatePago = async (pasajero) => {
+    try {
+      if (!location.state.invitado) {
+        await updatePagoPasajeros(
+          "pasajeros",
+          pasajero.nombreCompleto,
+          !pasajero.pago
+        );
         setActualizarLista(true);
       }
     } catch (error) {
@@ -115,7 +129,9 @@ function ListaDePasajeros() {
                     pasajero={p}
                     index={i}
                     updateAsistencia={handleUpdateAsistencia}
+                    updatePago={handleUpdatePago}
                     usuarioInvitado={location.state.invitado}
+                    usuarioTesorero={location.state.tesorera}
                   ></ItemPasajero>
                 ))}
               </ul>

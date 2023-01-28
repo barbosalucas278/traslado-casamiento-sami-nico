@@ -8,6 +8,12 @@ export const updateEstadoPasajeros = async (coleccion, doc, nuevoEstado) => {
     asistencia: estadoActualizado,
   });
 };
+export const updatePagoPasajeros = async (coleccion, doc, nuevoEstado) => {
+  const estadoActualizado = nuevoEstado;
+  return await firestore.collection(coleccion).doc(doc).update({
+    pago: estadoActualizado,
+  });
+};
 export const getAllPasajerosByParada = async (
   coleccion,
   parada,
