@@ -1,0 +1,16 @@
+img {
+  width: 100%;
+}
+h1 {
+  font-family: "Aboreto";
+  font-size: 40px !important;
+  font-weight: 600 !important;
+  color: rgb(114, 6, 238);
+}
+.container-titulo {
+  background-color: rgba(255, 255, 255, 0.507);
+  border-radius: 5px;
+}
+button {
+  background-color: rgb(114, 6, 238) !important;
+}
