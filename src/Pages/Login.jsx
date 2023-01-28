@@ -14,7 +14,7 @@ function Login() {
     }
   };
   const isValidUserName = (username) => {
-    const validUsernames = ["lbarbosa", "lgonzalez", "smartinez"];
+    const validUsernames = ["Lbarbosa", "Lgonzalez", "Smartinez"];
     if (validUsernames.includes(username)) {
       setUserIndex(validUsernames.indexOf(username));
       return true;
@@ -51,7 +51,7 @@ function Login() {
           </div>
           <div className="form-floating m-3">
             <input
-              type="password"
+              type="number"
               className="form-control"
               id="password"
               placeholder="Password"
