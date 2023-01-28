@@ -66,7 +66,7 @@ function ListaDePasajeros() {
       ) : (
         <>
           <h2
-            className="text-center bg-warning m-0"
+            className="text-center bg-warning m-0 p-3"
             onClick={() => setShowSeleccionarParada(true)}
           >
             Seleccionar Parada
