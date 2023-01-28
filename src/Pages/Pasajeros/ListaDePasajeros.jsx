@@ -30,7 +30,6 @@ function ListaDePasajeros() {
         paradaSeleccionada,
         (data) => {
           const response = data.docs.map((doc) => doc.data());
-          console.log(response);
           setListaDePasajeros(response);
           setTimeout(() => {
             setIsLoading(false);
