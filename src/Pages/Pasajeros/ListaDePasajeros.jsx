@@ -15,7 +15,10 @@ function ListaDePasajeros() {
   const [isLoading, setIsLoading] = useState(true);
   const [listaDePasajeros, setListaDePasajeros] = useState([]);
   const [actualizarLista, setActualizarLista] = useState(true);
-  const [paradaSeleccionada, setParadaSeleccionada] = useState("Barracas");
+  const [paradaSeleccionada, setParadaSeleccionada] = useState({
+    parada: "Barracas",
+    lugar: "Plaza Colombia 15:30",
+  });
   const [showSeleccionarParada, setShowSeleccionarParada] = useState(false);
   useEffect(() => {
     if (!location.state || !location.state.autorizado) {
@@ -27,7 +30,7 @@ function ListaDePasajeros() {
     const fetchData = async () => {
       await getAllPasajerosByParada(
         "pasajeros",
-        paradaSeleccionada,
+        paradaSeleccionada.parada,
         (data) => {
           const response = data.docs.map((doc) => doc.data());
           setListaDePasajeros(response);
@@ -46,13 +49,15 @@ function ListaDePasajeros() {
 
   const handleUpdateAsistencia = async (pasajero) => {
     try {
-      await updateEstadoPasajeros(
-        "pasajeros",
-        pasajero.nombreCompleto,
-        !pasajero.asistencia
-      );
-      console.log(pasajero);
-      setActualizarLista(true);
+      if (!location.state.invitado) {
+        await updateEstadoPasajeros(
+          "pasajeros",
+          pasajero.nombreCompleto,
+          !pasajero.asistencia
+        );
+        console.log(pasajero);
+        setActualizarLista(true);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -75,7 +80,10 @@ function ListaDePasajeros() {
               <div className="text-center bg-warning">
                 <h1
                   onClick={() => {
-                    setParadaSeleccionada("Caballito");
+                    setParadaSeleccionada({
+                      parada: "Caballito",
+                      lugar: "Acoyte y Rivadavia 15:50",
+                    });
                     setShowSeleccionarParada(false);
                     setActualizarLista(true);
                   }}
@@ -84,7 +92,10 @@ function ListaDePasajeros() {
                 </h1>
                 <h1
                   onClick={() => {
-                    setParadaSeleccionada("Barracas");
+                    setParadaSeleccionada({
+                      parada: "Barracas",
+                      lugar: "Plaza Colombia 15:30",
+                    });
                     setShowSeleccionarParada(false);
                     setActualizarLista(true);
                   }}
@@ -95,7 +106,8 @@ function ListaDePasajeros() {
             </>
           ) : (
             <>
-              <h1 className="text-center">{paradaSeleccionada}</h1>
+              <h1 className="text-center">{paradaSeleccionada.parada}</h1>
+              <h3 className="text-center">{paradaSeleccionada.lugar}</h3>
               <ul className="list-group">
                 {listaDePasajeros.map((p, i) => (
                   <ItemPasajero
@@ -103,6 +115,7 @@ function ListaDePasajeros() {
                     pasajero={p}
                     index={i}
                     updateAsistencia={handleUpdateAsistencia}
+                    usuarioInvitado={location.state.invitado}
                   ></ItemPasajero>
                 ))}
               </ul>

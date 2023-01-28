@@ -9,10 +9,21 @@ function Login() {
   const navigate = useNavigate();
   const handleLogin = (e) => {
     e.preventDefault();
+    if (isInvitado(username, password)) {
+      navigate("/pasajeros", { state: { autorizado: true, invitado: true } });
+    }
     if (isValidUserName(username) && isValidPassword(password)) {
-      navigate("/pasajeros", { state: { autorizado: true } });
+      navigate("/pasajeros", { state: { autorizado: true, invitado: false } });
     }
   };
+
+  const isInvitado = () => {
+    if (username === "Invitado" && password === "Enlapera") {
+      return true;
+    }
+    return false;
+  };
+
   const isValidUserName = (username) => {
     const validUsernames = ["Lbarbosa", "Lgonzalez", "Smartinez"];
     if (validUsernames.includes(username)) {
@@ -51,7 +62,7 @@ function Login() {
           </div>
           <div className="form-floating m-3">
             <input
-              type="number"
+              type="text"
               className="form-control"
               id="password"
               placeholder="Password"
