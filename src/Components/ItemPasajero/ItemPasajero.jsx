@@ -10,7 +10,7 @@ function ItemPasajero(props) {
     usuarioTesorero,
   } = props;
   const clases = [
-    "list-group-item mb-2 fw-bolder ",
+    "list-group-item mb-2 fw-bolder item-pasajero ",
     !pasajero.asistencia
       ? " list-group-item-danger"
       : " list-group-item-success",
@@ -38,10 +38,10 @@ function ItemPasajero(props) {
               pasajero.asistencia && (
                 <button
                   type="button"
-                  className="btn btn-success btn-sm btn-pago position-relative top-100 start-50 "
+                  className="btn btn-success btn-sm btn-pago position-absolute top-25 start-100 translate-middle"
                   onClick={() => updatePago(pasajero)}
                 >
-                  Confirmar pago
+                  $$$
                 </button>
               )}
           </>

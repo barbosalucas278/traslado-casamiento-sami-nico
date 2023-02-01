@@ -1,9 +1,16 @@
-.btn-pago{
-    background-color: green !important;
-    width: 30%;
-    top: 5px!important;
+.btn-pago {
+  background-color: green !important;
+  width: 15%;
+  left: 90% !important;
 }
-.btn-asistencia{
-    width: 30%;
-    top: 10px!important;
+.btn-asistencia {
+  width: 30%;
+  top: 10px !important;
+}
+.item-pasajero {
+  font-size: 75% !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 8vh;
 }
