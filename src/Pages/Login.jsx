@@ -58,48 +58,49 @@ function Login() {
   };
 
   return (
-    <body className="text-center">
-      <div className="position-relative">
-        <img src={LogoApp} alt="" />
-        <div className="container-titulo position-absolute top-50 start-50 translate-middle">
-          <h1 className="">
+    <div className="row m-0">
+      <div className="col-sm-6 left-container">
+        <div className="container-titulo text-center">
+          <h1>
             Traslado Casamiento <br />
             de Sami y nico
           </h1>
         </div>
       </div>
-      <main className="form-signin w-100 m-auto">
-        <form>
-          <div className="form-floating m-3">
-            <input
-              type="text"
-              className="form-control"
-              id="username"
-              placeholder="Usuario"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <label for="floatingInput">Usuario</label>
-          </div>
-          <div className="form-floating m-3">
-            <input
-              type="text"
-              className="form-control"
-              id="password"
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <label for="floatingPassword">Contraseña</label>
-          </div>
-          <button
-            className="w-75 btn btn-lg btn-primary m-3"
-            onClick={handleLogin}
-          >
-            Ingresar
-          </button>
-          <p className="mt-5 mb-3 text-muted">&copy; Lucas Barbosa</p>
-        </form>
-      </main>
-    </body>
+      <div className="col-sm-6 right-container">
+        <main className="form-signin">
+          <form>
+            <div className="w-75 form-floating m-sm-3">
+              <input
+                type="text"
+                className="form-control"
+                id="username"
+                placeholder="Usuario"
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              <label for="floatingInput">Usuario</label>
+            </div>
+            <div className="w-75 form-floating m-3">
+              <input
+                type="text"
+                className="form-control"
+                id="password"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <label for="floatingPassword">Contraseña</label>
+            </div>
+            <button
+              className="w-75 btn btn-lg btn-primary m-3"
+              onClick={handleLogin}
+            >
+              Ingresar
+            </button>
+            <p className="mt-5 mb-3 text-muted text-center">&copy; Lucas Barbosa</p>
+          </form>
+        </main>
+      </div>
+    </div>
   );
 }
 
