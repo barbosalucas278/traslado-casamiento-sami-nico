@@ -17,7 +17,7 @@ function ItemPasajero(props) {
   ];
 
   return (
-    <div>
+    <div className="col-sm-3 col-12">
       <li
         key={index}
         className={clases}
@@ -26,12 +26,12 @@ function ItemPasajero(props) {
         {pasajero.nombreCompleto}
         {!usuarioInvitado && ` | ${pasajero.celular}`}
       </li>
-      <div className="container position-relative top-100 start-50 translate-middle">
+      <div className="container position-relative top-100 top-sm-0 start-50 translate-middle">
         {pasajero.pago ? (
           <span className="badge bg-success rounded-pill">Ya Pagó</span>
         ) : (
           <>
-            <span className="badge bg-danger rounded-">No Pagó</span>
+            <span className="badge bg-danger rounded-pill">No Pagó</span>
             {!usuarioInvitado &&
               usuarioTesorero &&
               !pasajero.pago &&

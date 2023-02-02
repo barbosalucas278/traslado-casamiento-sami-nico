@@ -14,3 +14,5 @@
   justify-content: space-between;
   height: 8vh;
 }
+@media (min-width: 678px) {
+}

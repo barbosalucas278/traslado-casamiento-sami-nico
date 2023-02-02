@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import ItemPasajero from "../../Components/ItemPasajero/ItemPasajero";
 import {
   getAllPasajerosByParada,
+  guardarPasajeroEnCollection,
   updateEstadoPasajeros,
   updatePagoPasajeros,
 } from "../../Services/firestoreServicee";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import "./listaDePasajeros.css";
 import { useNavigation, useNavigate, useLocation } from "react-router-dom";
+import UserFormModal from "../../Components/UserFormModal/UserFormModal";
 
 function ListaDePasajeros() {
-  const navigation = useNavigation();
   const navigate = useNavigate();
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
@@ -21,6 +22,7 @@ function ListaDePasajeros() {
     lugar: "Plaza Colombia 15:30",
   });
   const [showSeleccionarParada, setShowSeleccionarParada] = useState(false);
+  const [showUserFormModal, setShowUserFormModal] = useState(false);
   useEffect(() => {
     if (!location.state || !location.state.autorizado) {
       navigate("/");
@@ -76,13 +78,42 @@ function ListaDePasajeros() {
       console.log(error);
     }
   };
-
+  const handleAddPasajero = async (pasajero) => {
+    try {
+      if (!location.state.invitado) {
+        await guardarPasajeroEnCollection(
+          "pasajeros",
+          pasajero.nombreCompleto,
+          pasajero
+        );
+        setActualizarLista(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="container-lista">
       {isLoading ? (
         <LoadingScreen />
       ) : (
         <>
+          {showUserFormModal ? (
+            <UserFormModal
+              onSubmit={handleAddPasajero}
+              onClose={setShowUserFormModal}
+            />
+          ) : (
+            <div class="position-fixed container-btn-agregar">
+              <button
+                class="btn btn-success btn-agregarPasajero fs-1 fw-bolder bg-success"
+                type="button"
+                onClick={() => setShowUserFormModal(true)}
+              >
+                +
+              </button>
+            </div>
+          )}
           <h2
             className="text-center bg-warning m-0 p-3"
             onClick={() => setShowSeleccionarParada(true)}
