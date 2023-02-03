@@ -15,7 +15,7 @@ export const updatePagoPasajeros = async (coleccion, doc, nuevoEstado) => {
   });
 };
 export const guardarPasajeroEnCollection = async (coleccion, docName, pasajeroData) => {
-  return await firestore.collection(coleccion).doc(docName).set(pasajeroData);
+  return await firestore.collection(coleccion).doc(docName).set({ ...pasajeroData, asistencia: false, pago: false });
 };
 export const getAllPasajerosByParada = async (
   coleccion,
@@ -26,5 +26,13 @@ export const getAllPasajerosByParada = async (
   return await firestore
     .collection(coleccion)
     .where("parada", "==", parada)
+    .onSnapshot(onResult, onError);
+};
+export const getAllParadas = async (
+  onResult,
+  onError
+) => {
+  return await firestore
+    .collection("paradas")
     .onSnapshot(onResult, onError);
 };

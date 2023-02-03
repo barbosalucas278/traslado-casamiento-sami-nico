@@ -77,12 +77,13 @@ function Login() {
                 id="username"
                 placeholder="Usuario"
                 onChange={(e) => setUsername(e.target.value)}
+                autoComplete="false"
               />
               <label for="floatingInput">Usuario</label>
             </div>
             <div className="w-75 form-floating m-3">
               <input
-                type="text"
+                type="password"
                 className="form-control"
                 id="password"
                 placeholder="Password"

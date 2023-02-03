@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import { Form } from "react-bootstrap";
 
 function UserFormModal(props) {
-  const { onClose, onSubmit } = props;
+  const { onClose, onSubmit, paradas } = props;
   const [userData, SetUserData] = useState({
     email: "",
-    parada: "",
+    parada: paradas[0].nombre,
     celular: "",
     nombreCompleto: "",
   });
@@ -20,30 +21,30 @@ function UserFormModal(props) {
   };
   return (
     <div
-      class="modal modal-signin position-static d-block bg-secondary py-5"
+      className="modal modal-signin position-static d-block bg-secondary py-5"
       tabindex="-1"
       role="dialog"
       id="modalSignin"
     >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content rounded-4 shadow">
-          <div class="modal-header p-5 pb-4 border-bottom-0">
-            <h1 class="fw-bold mb-0 fs-2">Agregar Pasajero</h1>
+      <div className="modal-dialog" role="document">
+        <div className="modal-content rounded-4 shadow">
+          <div className="modal-header p-5 pb-4 border-bottom-0">
+            <h1 className="fw-bold mb-0 fs-2">Agregar Pasajero</h1>
             <button
               type="button"
-              class="btn-close"
+              className="btn-close bg-light"
               data-bs-dismiss="modal"
               aria-label="Close"
               onClick={() => onClose(false)}
             ></button>
           </div>
 
-          <div class="modal-body p-5 pt-0">
-            <form class="" onSubmit={handleSubmit}>
-              <div class="form-floating mb-3">
+          <div className="modal-body p-5 pt-0">
+            <form className="" onSubmit={handleSubmit}>
+              <div className="form-floating mb-3">
                 <input
                   type="text"
-                  class="form-control rounded-3"
+                  className="form-control rounded-3"
                   placeholder="Pepito Sanchez"
                   onChange={(e) =>
                     SetUserData({ ...userData, nombreCompleto: e.target.value })
@@ -51,10 +52,10 @@ function UserFormModal(props) {
                 />
                 <label for="floatingInput">Nombre Completo</label>
               </div>
-              <div class="form-floating mb-3">
+              <div className="form-floating mb-3">
                 <input
                   type="email"
-                  class="form-control rounded-3"
+                  className="form-control rounded-3"
                   placeholder="name@example.com"
                   onChange={(e) =>
                     SetUserData({ ...userData, email: e.target.value })
@@ -62,21 +63,28 @@ function UserFormModal(props) {
                 />
                 <label for="floatingInput">Email</label>
               </div>
-              <div class="form-floating mb-3">
+              {/* <div className="form-floating mb-3">
                 <input
                   type="text"
-                  class="form-control rounded-3"
+                  className="form-control rounded-3"
                   placeholder="Barracas"
                   onChange={(e) =>
                     SetUserData({ ...userData, parada: e.target.value })
                   }
                 />
-                <label for="floatingPassword">Parada</label>
-              </div>
-              <div class="form-floating mb-3">
+                <label for="floatingPassword">Parada</label>                
+              </div> */}
+              <Form.Select onChange={(e) =>
+                SetUserData({ ...userData, parada: e.target.value })
+              } className="form-floating mb-3" aria-label="Default select example">
+                {paradas.map(parada => (
+                  <option value={parada.nombre}>{parada.nombre}</option>
+                ))}
+              </Form.Select>
+              <div className="form-floating mb-3">
                 <input
                   type="number"
-                  class="form-control rounded-3"
+                  className="form-control rounded-3"
                   placeholder="11xxxxxxxx"
                   onChange={(e) =>
                     SetUserData({ ...userData, celular: e.target.value })
@@ -85,7 +93,7 @@ function UserFormModal(props) {
                 <label for="floatingPassword">Celular</label>
               </div>
               <button
-                class="w-100 mb-2 btn btn-lg rounded-3 btn-primary"
+                className="w-100 mb-2 btn btn-lg rounded-3 btn-primary"
                 type="submit"
               >
                 Agregar

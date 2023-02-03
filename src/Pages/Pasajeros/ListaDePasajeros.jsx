@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ItemPasajero from "../../Components/ItemPasajero/ItemPasajero";
 import {
+  getAllParadas,
   getAllPasajerosByParada,
   guardarPasajeroEnCollection,
   updateEstadoPasajeros,
@@ -16,10 +17,11 @@ function ListaDePasajeros() {
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [listaDePasajeros, setListaDePasajeros] = useState([]);
+  const [listaDeParadas, setListaDeParadas] = useState([]);
   const [actualizarLista, setActualizarLista] = useState(true);
   const [paradaSeleccionada, setParadaSeleccionada] = useState({
     parada: "Barracas",
-    lugar: "Plaza Colombia 15:30",
+    lugar: "Plaza Colombia 15:20"
   });
   const [showSeleccionarParada, setShowSeleccionarParada] = useState(false);
   const [showUserFormModal, setShowUserFormModal] = useState(false);
@@ -28,6 +30,17 @@ function ListaDePasajeros() {
       navigate("/");
     }
   }, [location.state, navigate]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await getAllParadas((data) => {
+        const response = data.docs.map((doc) => doc.data());
+        setListaDeParadas(response);
+      },
+        (error) => console.log(error));
+    }
+    fetchData()
+  }, [])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -102,6 +115,7 @@ function ListaDePasajeros() {
             <UserFormModal
               onSubmit={handleAddPasajero}
               onClose={setShowUserFormModal}
+              paradas={listaDeParadas}
             />
           ) : (
             <div class="position-fixed container-btn-agregar">
@@ -123,30 +137,20 @@ function ListaDePasajeros() {
           {showSeleccionarParada ? (
             <>
               <div className="text-center bg-warning">
-                <h1
-                  onClick={() => {
-                    setParadaSeleccionada({
-                      parada: "Caballito",
-                      lugar: "Acoyte y Rivadavia 15:50",
-                    });
-                    setShowSeleccionarParada(false);
-                    setActualizarLista(true);
-                  }}
-                >
-                  Caballito
-                </h1>
-                <h1
-                  onClick={() => {
-                    setParadaSeleccionada({
-                      parada: "Barracas",
-                      lugar: "Plaza Colombia 15:30",
-                    });
-                    setShowSeleccionarParada(false);
-                    setActualizarLista(true);
-                  }}
-                >
-                  Barracas
-                </h1>
+                {listaDeParadas.map(parada => (
+                  <h1
+                    onClick={() => {
+                      setParadaSeleccionada({
+                        parada: parada.nombre,
+                        lugar: `${parada.lugarDeReunion} ${parada.horarioDeReunion}`,
+                      });
+                      setShowSeleccionarParada(false);
+                      setActualizarLista(true);
+                    }}
+                  >
+                    {parada.nombre}
+                  </h1>
+                ))}
               </div>
             </>
           ) : (
